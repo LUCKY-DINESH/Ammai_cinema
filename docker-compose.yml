@@ -1,0 +1,52 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: ammai_backend
+    restart: always
+    ports:
+      - "8000:8000"
+    environment:
+      - MONGODB_URL=mongodb+srv://reddymca16082003_db_user:g9tabKeMqhlXAvJX@cluster0.tug0d5t.mongodb.net/Ammai_website?retryWrites=true&w=majority
+      - MONGODB_URI=mongodb+srv://reddymca16082003_db_user:g9tabKeMqhlXAvJX@cluster0.tug0d5t.mongodb.net/Ammai_website?retryWrites=true&w=majority
+      - MONGODB_DB_NAME=Ammai_website
+      - JWT_SECRET=ammai-super-secret-key-change-in-production
+      - SECRET_KEY=ammai-super-secret-key-change-in-production
+      - CLOUDINARY_CLOUD_NAME=dzcss22tm
+      - CLOUDINARY_API_KEY=861726572422394
+      - CLOUDINARY_API_SECRET=cer9RzDFXFIw_OT0JWHxkTOTpNc
+      - GROQ_API_KEY=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
+      - GROQ_MODEL=openai/gpt-oss-120b
+    networks:
+      - ammai_network
+
+  node-service:
+    build:
+      context: ./node-service
+      dockerfile: Dockerfile
+    container_name: ammai_node_service
+    restart: always
+    ports:
+      - "4000:4000"
+    networks:
+      - ammai_network
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: ammai_frontend
+    restart: always
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    networks:
+      - ammai_network
+
+networks:
+  ammai_network:
+    driver: bridge

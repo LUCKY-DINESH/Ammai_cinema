@@ -1,0 +1,41 @@
+services:
+  # 1. Backend REST API & WebSocket Service (Node.js + MongoDB Atlas + Cloudinary)
+  - type: web
+    name: ammai-backend-api
+    env: node
+    plan: free
+    rootDir: node-service
+    buildCommand: npm install
+    startCommand: node src/server.js
+    healthCheckPath: /health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: MONGODB_URI
+        sync: false
+      - key: MONGODB_DB_NAME
+        value: Ammai_website
+      - key: CLOUDINARY_CLOUD_NAME
+        value: dzcss22tm
+      - key: CLOUDINARY_API_KEY
+        value: "861726572422394"
+      - key: CLOUDINARY_API_SECRET
+        sync: false
+      - key: JWT_SECRET
+        generateValue: true
+
+  # 2. Frontend React SPA (Vite Static Site)
+  - type: web
+    name: ammai-frontend
+    env: static
+    plan: free
+    rootDir: frontend
+    buildCommand: npm install && npm run build
+    staticPublishPath: dist
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
+    envVars:
+      - key: VITE_API_URL
+        sync: false

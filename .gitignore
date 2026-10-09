@@ -1,0 +1,42 @@
+# Dependencies
+node_modules/
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+ENV/
+
+# Environment variables & secrets (Never commit secrets to GitHub)
+.env
+.env.local
+.env.*.local
+
+# Production build outputs
+dist/
+build/
+
+# IDE & OS files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Heavy design / raw binary files (>100MB files will crash GitHub push!)
+*.ai
+*.xd
+*.rar
+*.zip
+Ammai_Web-01.jpg
+Ammai_Web-03.jpg
+Ammai.xd
+Ammai_Web_prototype.xd
+Ammai_Web.ai
+design-video-player.zip
+futo-sans.rar
+
+# Logs & temp
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
